@@ -1,7 +1,24 @@
-import '../styles/globals.css'
+import React from 'react';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+import { SessionProvider } from 'next-auth/react';
+
+export default function MyApp({ Component, session, pageProps, ...appProps }) {
+	const getContent = () => {
+		if ([`/`].includes(appProps.router.pathname))
+			return <Component {...pageProps} />;
+
+		return (
+			<SessionProvider
+				session={session}
+				basePath={'http://localhost:3001/api/auth'}
+				//baseUrl={'http://localhost:3001/api/auth'}
+			>
+				<Layout>
+					<Component {...pageProps} />{' '}
+				</Layout>
+			</SessionProvider>
+		);
+	};
+
+	return getContent();
 }
-
-export default MyApp
