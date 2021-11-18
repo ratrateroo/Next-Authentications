@@ -14,43 +14,78 @@ const Login = () => {
 	const { data: session, status } = useSession();
 	//const loading = status === 'loading';
 
-	useEffect(() => {
+	useEffect(async () => {
 		if (!session) {
-			setLoadedSession(session);
+			setIsLoading(true);
 			console.log('No Session');
 			setIsLoading(false);
 		} else {
 			console.log('With Session');
 		}
-	}, [session]);
+	}, [status]);
 
-	const onChangeHandler = (e) => {
-		const { name, value } = e.target;
-		updateFormData({
-			...formData,
-			[name]: value,
+	// const onChangeHandler = (e) => {
+	// 	const { name, value } = e.target;
+	// 	console.log(formData);
+	// 	updateFormData({
+	// 		...formData,
+	// 		[name]: value,
+	// 	});
+	// };
+
+	// const onSubmitHandler = async (e) => {
+	// 	e.preventDefault();
+	// 	try {
+	// 		console.log(formData);
+	// 		await sessionService.login(formData);
+	// 	} catch (e) {}
+	// };
+
+	const loginClientHandler = async () => {
+		await sessionService.loginClient({
+			username: 'username',
+			password: 'password',
+		});
+	};
+	const loginApiHandler = async () => {
+		await sessionService.loginAPI({
+			username: 'username',
+			password: 'password',
 		});
 	};
 
-	const onSubmitHandler = async (e) => {
-		e.preventDefault();
-		try {
-			console.log(formData);
-			await sessionService.login(formData);
-		} catch (e) {}
+	const signoutHandler = async () => {
+		await sessionService.LogOut({
+			username: 'username',
+			password: 'password',
+		});
 	};
 
 	return (
 		<div>
-			<h3>Status {status}</h3>
-			<h3>Session: {isLoading ? Yes : No}</h3>
-			<form onSubmit={onSubmitHandler}>
+			<h3>Status: {status}</h3>
+			<h3>Session: {isLoading ? 'No' : 'Yes'}</h3>
+			{/* <form onSubmit={onSubmitHandler}>
 				<label>Username</label>
-				<input type="text" onChange={onChangeHandler} />
+				<input type="text" name="username" onChange={onChangeHandler} />
 				<label>Password</label>
-				<input type="password" onChange={onChangeHandler} />
+				<input type="password" name="password" onChange={onChangeHandler} />
 				<button type="submit">Login</button>
-			</form>
+			</form> */}
+
+			{status === 'authenticated' ? (
+				<button type="button" onClick={signoutHandler}>
+					SignOut
+				</button>
+			) : (
+				<button type="button" onClick={loginClientHandler}>
+					Login to Client Server
+				</button>
+			)}
+
+			<button type="button" onClick={loginApiHandler}>
+				Login to Api Server
+			</button>
 		</div>
 	);
 };

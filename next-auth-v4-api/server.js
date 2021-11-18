@@ -1,10 +1,12 @@
 // server.js
+require('dotenv').config();
 const express = require('express');
-const next = require('next');
+const nextModule = require('next');
 const cors = require('cors');
 
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
+
+const app = nextModule({ dev });
 const handle = app.getRequestHandler();
 
 app.prepare()
@@ -12,10 +14,12 @@ app.prepare()
 		const server = express();
 		server.use(cors());
 
-		server.get('*', (req, res) => {
+		server.get('*', async (req, res) => {
 			// if (req.url.includes('/api')) {
-			//     return app.render(req, res, '/404');
+			// 	return app.render(req, res, '/404');
+
 			// }
+			console.log('api');
 			return handle(req, res);
 		});
 
@@ -23,9 +27,9 @@ app.prepare()
 			return handle(req, res);
 		});
 
-		server.listen(process.env.PORT || 3000, (err) => {
+		server.listen(process.env.PORT || 3001, (err) => {
 			if (err) throw err;
-			console.log(`> Ready on http://localhost:${process.env.PORT || 3000}`);
+			console.log(`> Ready on http://localhost:${process.env.PORT || 3001}`);
 		});
 	})
 	.catch((ex) => {

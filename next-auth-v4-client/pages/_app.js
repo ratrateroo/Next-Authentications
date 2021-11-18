@@ -13,9 +13,8 @@ export default function MyApp({ Component, session, pageProps, ...appProps }) {
 				basePath={'http://localhost:3001/api/auth'}
 				//baseUrl={'http://localhost:3001/api/auth'}
 			>
-				<Layout>
-					<Component {...pageProps} />{' '}
-				</Layout>
+				<Component {...pageProps} />
+				{}
 			</SessionProvider>
 		);
 	};
