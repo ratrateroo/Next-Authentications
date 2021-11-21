@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { serviceMessage } from '../../../services/serviceMessage';
 
 export default NextAuth({
 	providers: [
@@ -17,12 +18,15 @@ export default NextAuth({
 			// 	password: { label: 'Password', type: 'password' },
 			// },
 			async authorize(credentials, req) {
-				console.log(req.body);
-				console.log(req.query);
-				console.log(req.headers);
-				console.log(req.method);
-
-				return credentials;
+				// console.log(req.body);
+				// console.log(req.query);
+				// console.log(req.headers);
+				// console.log(req.method);
+				console.log('Reply');
+				const reply = await serviceMessage('Hello World');
+				console.log(reply.message);
+				return reply;
+				//return credentials;
 				//return credentials;
 				// console.log(credentials);
 				// const user = {

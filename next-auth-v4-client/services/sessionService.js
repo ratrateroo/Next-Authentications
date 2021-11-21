@@ -15,7 +15,7 @@ export async function loginAPI(data) {
 
 	const result = await signIn('userSignIn', options);
 
-	console.log(result);
+	console.log('Service Results: ' + result);
 
 	return result;
 }

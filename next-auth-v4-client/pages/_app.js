@@ -10,7 +10,7 @@ export default function MyApp({ Component, session, pageProps, ...appProps }) {
 		return (
 			<SessionProvider
 				session={session}
-				basePath={'http://localhost:3001/api/auth'}
+				basePath={'http://localhost:3000/api/auth'}
 				//baseUrl={'http://localhost:3001/api/auth'}
 			>
 				<Component {...pageProps} />
